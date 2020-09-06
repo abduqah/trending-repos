@@ -37,3 +37,8 @@ Develop a REST microservice that list the languages used by the 100 trending pub
 5. Please note that this file is writen in python 3. if your system have python 2 and 3, you will need to run the file using the following command instead
 
     ```python3 main.py```
+
+6. To run servise using new GitHub API v4 -GraphQl-
+
+    ```python main-graphql.py```
+    ```python3 main-graphql.py```
