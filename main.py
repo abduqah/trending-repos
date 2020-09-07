@@ -27,14 +27,14 @@ def get_statistics(data):
     r = requests.get(repo['languages_url'], headers={'Authorization': 'token %s' % config('TOKEN')})
     json_data = json.loads(r.text)
 
-    for lang, uuid in json_data.items():
+    for lang in json_data.items():
       try:
-        language_obj = languages[lang]
+        language_obj = languages[lang[0]]
         language_obj['count'] += 1
-        language_obj['repos_list'].append(repo['url'])
+        language_obj['repos_list'].append(repo['html_url'])
       except:
-        languages[lang] = {'count': 1, 'repos_list': [repo['url']]}
-        print('New language added: %s' % lang, sep='\n')
+        languages[lang[0]] = {'count': 1, 'repos_list': [repo['html_url']]}
+        print('New language added: %s' % lang[0], sep='\n')
         pass
 
   return languages
