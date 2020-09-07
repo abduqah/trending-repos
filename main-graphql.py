@@ -17,7 +17,7 @@ def call_github_api(date):
   print('Real process started', sep='\n')
 
   query = Template("""{
-    search(type: REPOSITORY, query: "created:>$data sort:stars-desc", first: $numOfResults) {
+    search(type: REPOSITORY, query: "created:>$date sort:stars-desc", first: $numOfResults) {
       nodes {
         ... on Repository {
           name
@@ -32,9 +32,7 @@ def call_github_api(date):
     }
   }""")
 
-  date_30days_ago = date.today() - timedelta(30)
-
-  r = requests.post("https://api.github.com/graphql", json={'query': query.substitute(data=date_30days_ago, numOfResults=100)},headers={'Authorization': 'token %s' % config('TOKEN')})
+  r = requests.post("https://api.github.com/graphql", json={'query': query.substitute(date=date, numOfResults=100)},headers={'Authorization': 'token %s' % config('TOKEN')})
   json_data = json.loads(r.text)
 
   return json_data['data']['search']['nodes']
